@@ -1,3 +1,3 @@
 class Word < ApplicationRecord
-    belongs_to: :round
+    belongs_to :round
 end
