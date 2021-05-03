@@ -1,3 +1,6 @@
+const newGame = document.getElementById("form-new-game")
+
+
 function fetchRounds() {
     fetch("http://localhost:3000/rounds")
     .then(r => r.json())
@@ -10,7 +13,25 @@ function appendRounds(rounds){
         const li = document.createElement("li")
         let wl
         (round.win) ? wl = "WIN" : wl = "LOSS";
-        li.innerText = `Round ${round.id} -  ${wl}`
+        if (round.words[0]) {
+            li.innerText = `Round ${round.id} -  Word: ${round.words[0].name}  -  ${wl}!`
+        } else {
+            li.innerText = `Round ${round.id}`
+        }
         roundDiv.append(li)
     }
+};
+
+function postRound(e) {
+    e.preventDefault()
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({round: {win: true}})
+    }
+    fetch("http://localhost:3000/rounds", options)
+    .then(r => r.json())
+    .then(round => console.log(round))
 }

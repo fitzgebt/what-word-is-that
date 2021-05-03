@@ -10,12 +10,14 @@ class RoundsController < ApplicationController
         render json: round
     end
 
-    def new
-        r = Round.new
-    end
-
     def create
+        # binding.pry
+        round = Round.create(round_params)
+        render json: round
+        # params
     end
 
-
+    def round_params
+        params.require(:round).permit(:id, :win)
+    end
 end
