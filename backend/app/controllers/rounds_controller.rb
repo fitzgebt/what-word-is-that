@@ -2,7 +2,6 @@ class RoundsController < ApplicationController
 
 
     def index
-        binding.pry
         render json: Round.all
     end
 
@@ -14,4 +13,9 @@ class RoundsController < ApplicationController
     def new
         r = Round.new
     end
+
+    def create
+    end
+
+
 end
