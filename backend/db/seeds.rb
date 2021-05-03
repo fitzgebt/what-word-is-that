@@ -8,12 +8,15 @@
 
 d = Round.new
 d.win = true
+d.complete = true
 d.save
 c = Round.new
 c.win = true
+c.complete = true
 c.save
 b = Round.new
 b.win = true
+b.complete = true
 b.save
 
 # temp word bank

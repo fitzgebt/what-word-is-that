@@ -13,7 +13,7 @@ function appendRounds(rounds){
         const li = document.createElement("li")
         let wl
         (round.win) ? wl = "WIN" : wl = "LOSS";
-        if (round.words[0]) {
+        if (round.complete) {
             li.innerText = `Round ${round.id} -  Word: ${round.words[0].name}  -  ${wl}!`
         } else {
             li.innerText = `Round ${round.id}`
@@ -29,11 +29,13 @@ function postRound(e) {
         headers: {
             "Content-type": "application/json"
         },
-        body: JSON.stringify({round: {win: true}})
+        body: JSON.stringify({round: {win: true, complete: true} })
     }
     fetch("http://localhost:3000/rounds", options)
     .then(r => r.json())
     .then(round => console.log(round))
     fetchWord()
+    // method to display 'guess-platform'
+    // method to display 'guess-letters'
     
 }
