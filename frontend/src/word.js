@@ -1,15 +1,16 @@
 function fetchWord() {
-
-    const randomWord = ""
+// find random word from back
+    const randomWord = "testWord"
 
     const options = {
         method: "POST",
         headers: {
             "Content-type": "application/json"
         },
-        body: JSON.stringify({word: {name: randomWord, round_id: 1}})
+        // how to select last round?
+        body: JSON.stringify({word: {name: randomWord, round_id: `${Round.all.last.id}`}})
     }
     fetch("http://localhost:3000/words", options)
     .then(r => r.json())
-    .then(round => console.log(round))
+    .then(word => console.log(word))
 }
