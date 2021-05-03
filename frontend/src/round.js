@@ -34,4 +34,6 @@ function postRound(e) {
     fetch("http://localhost:3000/rounds", options)
     .then(r => r.json())
     .then(round => console.log(round))
+    fetchWord()
+    
 }
