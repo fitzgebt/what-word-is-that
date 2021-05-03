@@ -1,3 +1,6 @@
+const newGuess = document.getElementById("guess-a-letter")
+
+
 function fetchWord() {
 // find random word from back
     const randomWord = "testWord"

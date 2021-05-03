@@ -13,7 +13,8 @@
 ActiveRecord::Schema.define(version: 2021_05_01_222935) do
 
   create_table "rounds", force: :cascade do |t|
-    t.boolean "win"
+    t.boolean "win", default: false
+    t.boolean "complete", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
