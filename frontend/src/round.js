@@ -9,16 +9,30 @@ function fetchRounds() {
 
 function appendRounds(rounds){
     const roundDiv = document.getElementById("pastRounds")
-    for (let round of rounds) {
+    if (rounds.length > 1) {
+        for (let round of rounds) {
+            const li = document.createElement("li")
+            let wl
+            (round.win) ? wl = "WIN" : wl = "LOSS";
+            if (round.complete) {
+                li.innerText = `Round ${round.id} -  Word: ${round.word.name}  -  ${wl}!`
+            } else {
+                li.innerText = `Round ${round.id} - In Progress...`
+            }
+            roundDiv.append(li)
+        }
+    } else { 
         const li = document.createElement("li")
         let wl
-        (round.win) ? wl = "WIN" : wl = "LOSS";
-        if (round.complete) {
-            li.innerText = `Round ${round.id} -  Word: ${round.word.name}  -  ${wl}!`
+        (rounds.win) ? wl = "WIN" : wl = "LOSS";
+        if (rounds.complete) {
+            li.innerText = `Round ${rounds.id} -  Word: ${rounds.word.name}  -  ${wl}!`
         } else {
-            li.innerText = `Round ${round.id} - In Progress...`
+            li.innerText = `Round ${rounds.id} - In Progress...`
         }
         roundDiv.append(li)
+        appendGuessPlatform(rounds)
+        // function to create 'blank spaces for guessing' with the newest rounds obj
     }
 };
 
@@ -45,8 +59,7 @@ function postRound(e) {
     }
     fetch("http://localhost:3000/rounds", options)
     .then(r => r.json())
-    .then(round => console.log(round))
-    debugger
+    .then(appendRounds)
     // method to display 'guess-platform'
     // method to display 'guess-letters'
     

@@ -3,24 +3,21 @@ const newGuess = document.getElementById("guess-a-letter")
 
 
 
-function fetchWord() {
-// find random word from back
+function appendGuessPlatform(round) {
+    debugger
+    const guessDiv = document.getElementById("guess-platforms")
+    removeAllChildNodes(guessDiv)
+    for (i=0; i < round.word.name.length; i++) {
+        const u = document.createElement("u")
+        u.innerText = "*"
+        guessDiv.append(u)
+    }
 
 
 }
 
-function postWord() {
-    const randomWord = "testWord"
-
-    const options = {
-        method: "POST",
-        headers: {
-            "Content-type": "application/json"
-        },
-        // how to select last round?
-        body: JSON.stringify({word: {name: randomWord, round_id: `${Round.all.last.id}`}})
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild)
     }
-    fetch("http://localhost:3000/words", options)
-    .then(r => r.json())
-    .then(word => console.log(word))
 }
