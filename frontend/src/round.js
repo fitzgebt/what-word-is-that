@@ -29,7 +29,7 @@ function postRound(e) {
         headers: {
             "Content-type": "application/json"
         },
-        body: JSON.stringify({round: {win: true, complete: true} })
+        body: JSON.stringify({round: {win: false, complete: false} })
     }
     fetch("http://localhost:3000/rounds", options)
     .then(r => r.json())
