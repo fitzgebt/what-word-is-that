@@ -1,6 +1,15 @@
 class WordsController < ApplicationController
     def index
-        render json: Word.all
+        find_word = ""
+        Word.all.each do |word|
+            if word.rounds.first
+                if word.rounds.first.complete == false
+                    find_word = word
+                end
+            end
+        end
+        render json: find_word
+        # render json: Word.all
     end
 
     def show
