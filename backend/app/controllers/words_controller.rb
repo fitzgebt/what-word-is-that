@@ -9,13 +9,11 @@ class WordsController < ApplicationController
     end
 
     def create
-        # binding.pry
-        # word = Word.create(word_params)
+        word = Word.create(word_params)
         render json: word
-        # params
     end
 
-    # def word_params
-    #     params.require(:word).permit(:id, :name, :round_id)
-    # end
+    def word_params
+        params.require(:word).permit(:id, :name)
+    end
 end

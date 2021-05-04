@@ -13,19 +13,20 @@
 ActiveRecord::Schema.define(version: 2021_05_01_222935) do
 
   create_table "rounds", force: :cascade do |t|
+    t.integer "guesses"
     t.boolean "win", default: false
     t.boolean "complete", default: false
+    t.integer "word_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["word_id"], name: "index_rounds_on_word_id"
   end
 
   create_table "words", force: :cascade do |t|
     t.string "name"
-    t.integer "round_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["round_id"], name: "index_words_on_round_id"
   end
 
-  add_foreign_key "words", "rounds"
+  add_foreign_key "rounds", "words"
 end

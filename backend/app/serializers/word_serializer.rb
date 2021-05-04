@@ -1,4 +1,4 @@
 class WordSerializer < ActiveModel::Serializer
   attributes :id, :name
-  belongs_to :round
+  has_many :rounds
 end

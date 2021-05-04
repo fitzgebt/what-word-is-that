@@ -10,11 +10,12 @@ function fetchRounds() {
 function appendRounds(rounds){
     const roundDiv = document.getElementById("pastRounds")
     for (let round of rounds) {
+        debugger
         const li = document.createElement("li")
         let wl
         (round.win) ? wl = "WIN" : wl = "LOSS";
         if (round.complete) {
-            li.innerText = `Round ${round.id} -  Word: ${round.words[0].name}  -  ${wl}!`
+            li.innerText = `Round ${round.id} -  Word: ${round.word.name}  -  ${wl}!`
         } else {
             li.innerText = `Round ${round.id}`
         }

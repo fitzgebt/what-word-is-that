@@ -1,3 +1,3 @@
 class Round < ApplicationRecord
-    has_many :words
+    belongs_to :word
 end

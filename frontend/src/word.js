@@ -1,8 +1,15 @@
 const newGuess = document.getElementById("guess-a-letter")
 
 
+
+
 function fetchWord() {
 // find random word from back
+
+
+}
+
+function postWord() {
     const randomWord = "testWord"
 
     const options = {
