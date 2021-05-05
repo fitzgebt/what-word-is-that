@@ -92,6 +92,7 @@ function replaceBlanks(indicies, letter) {
 
         }
     }
+    checkIfWin()
 }
 
 function filterGuessChildNodes(parent) {
@@ -154,12 +155,13 @@ function checkIfWin() {
         let win = true
         const currentLetters = filterGuessChildNodes(guessDiv)
         for (let i=0; i < currentLetters.length; i++) {
-            if (currentLetters[x] == '*') {
+            if (currentLetters[i] == '*') {
                 win = false
             }
         }
         if (win == true) {
             roundWin = true
+            roundOver()
         }
     }
 }

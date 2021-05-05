@@ -73,10 +73,17 @@ function roundOver() {
 }
 
 function getLastRound(rounds) {
+    let won = false
+    if ((roundWin == true) && (parseInt(counter.innerText) < 8)) {
+        won = true 
+    } else {  
+        won = false
+    } 
+    
     debugger 
     const body = {
         round: {
-            win: false,
+            win: won,
             complete: true,
             guesses: parseInt(counter.innerText),
             word_id: rounds[rounds.length -1].word.id,
