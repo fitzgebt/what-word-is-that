@@ -24,6 +24,13 @@ function removeAllChildNodes(parent) {
     }
 }
 
+function removeAllChildElements(parent) {
+    while (parent.children.length > 0) {
+        parent.removeChild(parent.firstElementChild)
+    }
+}
+
+
 function fetchLetters(e) {
     const userInput = e.target.children[1].value
     let test
@@ -91,7 +98,9 @@ function increaseWrongGuess() {
 
 function appendCounter(num = 0) {
     const li = document.getElementById("incorrect-guesses-text")
-    removeAllChildNodes(li)
+    if (li.children.length) {
+        removeAllChildElements(li)
+    }
     const ul = document.createElement("ul")
     ul.id = "counter"
     ul.innerText = num
