@@ -51,24 +51,34 @@ function letterIncluded(word, input) {
 }
 
 function replaceBlanks(indicies) {
+    const currentLetters = filterGuessChildNodes(guessDiv)
     removeAllChildNodes(guessDiv)
     // let children = guessDiv.children
     for (let x=0; x < indicies.length; x++) {
-        if (indicies[x] != 0) {
+        if ((indicies[x] != 0) && (currentLetters[x] == '*')) {
             const u = document.createElement("u")
             u.innerText = indicies[x]
             guessDiv.append(u)
-        } else {
+        } else if (currentLetters[x] == '*') {
             const u = document.createElement("u")
             u.innerText = "*"
             guessDiv.append(u)
+        } else {
+            const u = document.createElement("u")
+            u.innerText = currentLetters[x]
+            guessDiv.append(u)
+
         }
     }
     debugger
 }
 
 function filterGuessChildNodes(parent) {
+    let children = parent.children
+    let arr = []
     for (let i=0; i < parent.childElementCount; i++) {
-        
+        arr.push(children[i].innerText)
     }
+    return arr
+
 }
