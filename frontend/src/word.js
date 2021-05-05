@@ -1,7 +1,7 @@
 const newGuess = document.getElementById("guess-a-letter")
 const guessDiv = document.getElementById("guess-platforms")
 const wrongGuessDiv = document.getElementById("incorrect-guesses")
-
+const wrongLetters = document.getElementById("previously-guessed-letters")
 
 function appendGuessPlatform(round) {
     removeAllChildNodes(guessDiv)
@@ -12,7 +12,7 @@ function appendGuessPlatform(round) {
     }
     const li = document.createElement("li")
     li.id = "incorrect-guesses-text"
-    li.innerText = "Incorrect Guesses: (5 chances) "
+    li.innerText = "Incorrect Guesses: (8 chances) "
     wrongGuessDiv.append(li)
     appendCounter()
     
@@ -39,7 +39,7 @@ function fetchLetters(e) {
     .then(r => r.json())
     .then(wordName)
     .then(w => letterIncluded(w, userInput))
-    
+    appendLetters(userInput)
 }
 
 function wordName(word) {
@@ -47,22 +47,32 @@ function wordName(word) {
 }
 
 function letterIncluded(word, input) {
-    if (word.includes(input)) {
-        let indicies = []
-        splitWord = word.split("")
-        for (const index of splitWord) {
-            (index == input) ? indicies.push(input) : indicies.push(0)
-        } 
-        replaceBlanks(indicies)
+    const counter = document.getElementById("counter")
+    if (parseInt(counter.innerText) < 8) {
+        if (word.includes(input)) {
+            let indicies = []
+            splitWord = word.split("")
+            for (const index of splitWord) {
+                (index == input) ? indicies.push(input) : indicies.push(0)
+            } 
+            replaceBlanks(indicies, input)
+        } else {
+            increaseWrongGuess()
+            if (parseInt(counter.innerText) == 8) {
+                debugger
+                // game over time for new game
+                // fetchRounds()
+            }
+        }
     } else {
-        increaseWrongGuess()
+        debugger
+        // too many guesses time for new game
     }
 }
 
-function replaceBlanks(indicies) {
+function replaceBlanks(indicies, letter) {
     const currentLetters = filterGuessChildNodes(guessDiv)
     removeAllChildNodes(guessDiv)
-    // let children = guessDiv.children
     for (let x=0; x < indicies.length; x++) {
         if ((indicies[x] != 0) && (currentLetters[x] == '*')) {
             const u = document.createElement("u")
@@ -93,7 +103,12 @@ function filterGuessChildNodes(parent) {
 function increaseWrongGuess() {
     const counter = document.getElementById("counter")
     let x = parseInt(counter.innerText) + 1 
-    appendCounter(x)
+    if (x == 8) {
+        const guessBtn = document.getElementById("btn-guess")
+        guessBtn.style.display = 'none'
+    } else {
+        appendCounter(x)
+    }
 }
 
 function appendCounter(num = 0) {
@@ -105,4 +120,10 @@ function appendCounter(num = 0) {
     ul.id = "counter"
     ul.innerText = num
     wrongGuessDiv.firstElementChild.append(ul)
+}
+
+function appendLetters(letter) {
+    const li = document.createElement("li")
+    li.innerText = letter
+    wrongLetters.append(li)
 }
