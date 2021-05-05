@@ -64,3 +64,7 @@ function postRound(e) {
     // method to display 'guess-letters'
     
 }
+
+function roundOver() {
+    
+}

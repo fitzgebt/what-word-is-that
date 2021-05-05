@@ -57,16 +57,11 @@ function letterIncluded(word, input) {
             } 
             replaceBlanks(indicies, input)
         } else {
-            increaseWrongGuess()
-            if (parseInt(counter.innerText) == 8) {
-                debugger
-                // game over time for new game
-                // fetchRounds()
-            }
+            increaseWrongGuess(word)
         }
     } else {
-        debugger
         // too many guesses time for new game
+        // revealWord(word, gameOver)
     }
 }
 
@@ -100,12 +95,14 @@ function filterGuessChildNodes(parent) {
     return arr
 }
 
-function increaseWrongGuess() {
+function increaseWrongGuess(word) {
     const counter = document.getElementById("counter")
     let x = parseInt(counter.innerText) + 1 
     if (x == 8) {
-        const guessBtn = document.getElementById("btn-guess")
-        guessBtn.style.display = 'none'
+        const gameOver = true
+        newGuess.style.display = 'none'
+        revealWord(word, gameOver)
+        appendCounter(x)
     } else {
         appendCounter(x)
     }
@@ -126,4 +123,17 @@ function appendLetters(letter) {
     const li = document.createElement("li")
     li.innerText = letter
     wrongLetters.append(li)
+}
+
+function revealWord(word, gameOver) {
+    if (gameOver == true) {
+        removeAllChildNodes(guessDiv)
+        for (let i=0; i < word.length; i++) {
+            splitWord = word.split("")
+            const u = document.createElement("u")
+            u.innerText = splitWord[i]
+            guessDiv.append(u)
+        }
+    }
+
 }
