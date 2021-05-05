@@ -2,19 +2,27 @@ const newGuess = document.getElementById("guess-a-letter")
 const guessDiv = document.getElementById("guess-platforms")
 const wrongGuessDiv = document.getElementById("incorrect-guesses")
 const wrongLetters = document.getElementById("previously-guessed-letters")
+const counter = document.getElementById("counter")
+
 
 function appendGuessPlatform(round) {
-    removeAllChildNodes(guessDiv)
-    for (i=0; i < round.word.name.length; i++) {
-        const u = document.createElement("u")
-        u.innerText = "*"
-        guessDiv.append(u)
+    checkIfWin()
+    if (roundWin == false) {
+
+        removeAllChildNodes(guessDiv)
+        for (i=0; i < round.word.name.length; i++) {
+            const u = document.createElement("u")
+            u.innerText = "*"
+            guessDiv.append(u)
+        }
+        // const li = document.createElement("li")
+        // li.id = "incorrect-guesses-text"
+        // li.innerText = "Incorrect Guesses: (8 chances) "
+        // wrongGuessDiv.append(li)
+        appendCounter()
+    } else {
+        roundOver()
     }
-    const li = document.createElement("li")
-    li.id = "incorrect-guesses-text"
-    li.innerText = "Incorrect Guesses: (8 chances) "
-    wrongGuessDiv.append(li)
-    appendCounter()
     
 }
 
@@ -127,6 +135,7 @@ function appendLetters(letter) {
 
 function revealWord(word, gameOver) {
     if (gameOver == true) {
+        roundWin = false
         removeAllChildNodes(guessDiv)
         for (let i=0; i < word.length; i++) {
             splitWord = word.split("")
@@ -134,6 +143,23 @@ function revealWord(word, gameOver) {
             u.innerText = splitWord[i]
             guessDiv.append(u)
         }
+        roundOver(word)
     }
 
+}
+
+function checkIfWin() {
+    if (guessDiv.children.length > 0) {
+
+        let win = true
+        const currentLetters = filterGuessChildNodes(guessDiv)
+        for (let i=0; i < currentLetters.length; i++) {
+            if (currentLetters[x] == '*') {
+                win = false
+            }
+        }
+        if (win == true) {
+            roundWin = true
+        }
+    }
 }

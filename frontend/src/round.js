@@ -1,5 +1,5 @@
 const newGame = document.getElementById("form-new-game")
-
+let roundWin = false
 
 function fetchRounds() {
     fetch("http://localhost:3000/rounds")
@@ -66,5 +66,27 @@ function postRound(e) {
 }
 
 function roundOver() {
-    
+    // set Round.all.last win/complete/guesses
+    fetch("http://localhost:3000/rounds")
+    .then(r => r.json())
+    .then(getLastRound)
+}
+
+function getLastRound(rounds) {
+    debugger 
+    const body = {
+        round: {
+            win: false,
+            complete: true,
+            guesses: parseInt(counter.innerText),
+            word_id: rounds[rounds.length -1].word.id,
+            word: {
+                id: rounds[rounds.length -1].word.id,
+                name: rounds[rounds.length -1].word.name
+            }
+        }
+    }
+    rounds[rounds.length -1].complete = true
+
+
 }
