@@ -43,14 +43,15 @@ class Word {
             if (parseInt(counter.innerText) < 8) {
                 if (currentRound.children[0].word.name.includes(userInput)) {
                     let indicies = []
-                    splitWord = currentRound.children[0].word.name.split("")
+                    const splitWord = currentRound.children[0].word.name.split("")
                     for (const index of splitWord) {
                         (index == userInput) ? indicies.push(userInput) : indicies.push(0)
                     }
-                    this.replaceBlanks(indicies, userInput) 
+                    Word.replaceBlanks(indicies, userInput) 
                 } else {
                     debugger
                     Word.increaseWrongGuess()
+                    Word.appendLetters(userInput)
                 }
             }
         }
@@ -70,25 +71,25 @@ class Word {
     //     }
     // }
 
-    letterIncluded(word, input) {
-        const counter = document.getElementById("counter")
-            letterBank.push(input)
-            if (parseInt(counter.innerText) < 8) {
-                if (word.includes(input)) {
-                    let indicies = []
-                    splitWord = word.split("")
-                    for (const index of splitWord) {
-                        (index == input) ? indicies.push(input) : indicies.push(0)
-                    } 
-                    replaceBlanks(indicies, input)
-                } else {
-                    increaseWrongGuess(word)
-                }
-            }
-    }
+    // letterIncluded(word, input) {
+    //     const counter = document.getElementById("counter")
+    //         letterBank.push(input)
+    //         if (parseInt(counter.innerText) < 8) {
+    //             if (word.includes(input)) {
+    //                 let indicies = []
+    //                 const splitWord = word.split("")
+    //                 for (const index of splitWord) {
+    //                     (index == input) ? indicies.push(input) : indicies.push(0)
+    //                 } 
+    //                 replaceBlanks(indicies, input)
+    //             } else {
+    //                 increaseWrongGuess(word)
+    //             }
+    //         }
+    // }
         
     static replaceBlanks(indicies, letter) {
-        const currentLetters = filterGuessChildNodes(guessDiv)
+        const currentLetters = Word.filterGuessChildNodes(guessDiv)
         removeAllChildNodes(guessDiv)
         for (let x=0; x < indicies.length; x++) {
             if ((indicies[x] != 0) && (currentLetters[x] == '*')) {
@@ -106,10 +107,10 @@ class Word {
     
             }
         }
-        checkIfWin()
+        Word.checkIfWin()
     }
     
-    filterGuessChildNodes(parent) {
+    static filterGuessChildNodes(parent) {
         let children = parent.children
         let arr = []
         for (let i=0; i < parent.childElementCount; i++) {
@@ -120,7 +121,7 @@ class Word {
     
     static increaseWrongGuess() {
         debugger
-        // const counter = document.getElementById("counter")
+        const counter = document.getElementById("counter")
         let x = parseInt(counter.innerText) + 1 
         if (x == 8) {
             const gameOver = true
@@ -143,7 +144,7 @@ class Word {
         wrongGuessDiv.firstElementChild.append(ul)
     }
     
-    appendLetters(letter) {
+    static appendLetters(letter) {
         const li = document.createElement("li")
         li.innerText = letter
         wrongLetters.append(li)
@@ -166,7 +167,7 @@ class Word {
     static checkIfWin() {
         if (guessDiv.children.length > 0) {
             let win = true
-            const currentLetters = filterGuessChildNodes(guessDiv)
+            const currentLetters = Word.filterGuessChildNodes(guessDiv)
             for (let i=0; i < currentLetters.length; i++) {
                 if (currentLetters[i] == '*') {
                     win = false
