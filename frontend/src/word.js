@@ -38,9 +38,8 @@ class Word {
         if (letterBank.includes(userInput)) {
             alert("You already chose that letter - try a new one.")
         } else {
-            
             letterBank.push(userInput)
-            if (parseInt(counter.innerText) < 8) {
+            if (parseInt(counter.innerText) <= 8) {
                 if (currentRound.children[0].word.name.includes(userInput)) {
                     let indicies = []
                     const splitWord = currentRound.children[0].word.name.split("")
@@ -176,7 +175,7 @@ class Word {
             if (win === true) {
                 roundWin = true
                 newGuess.hidden = true
-                roundOver()
+                Round.roundOver()
             }
         }
     }

@@ -34,7 +34,6 @@ class RoundsController < ApplicationController
         round.complete = params[:round][:complete]
         round.guesses = params[:round][:guesses]
         round.save
-        binding.pry
         render json: round
     end
 

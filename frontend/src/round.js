@@ -23,7 +23,6 @@ class Round {
         li.complete = this.complete
         li.gueeses = this.guesses
         li.word = this.word
-        debugger
         if (this.complete === false) {
             li.innerText = `Round ${this.id} - In Progress...`
             currentRound.append(li)
@@ -78,7 +77,7 @@ class Round {
 
     static postRound(e) {
         e.preventDefault()
-        // freshRound()
+        Round.freshRound()
         const body = {
             round: {
                 win: false,
@@ -140,7 +139,7 @@ class Round {
             newRound.appendRound()
         })
         .then(removeAllChildElements(currentRound))
-        .then(removeAllChildElements(wrongLetters))
+        // .then(removeAllChildElements(wrongLetters))
         .then(roundWin = false)
 
 
@@ -152,46 +151,48 @@ class Round {
 
 
 
-    static getLastRound(rounds) {
-        let won = false
-        const count = document.getElementById("counter")
-        if ((roundWin == true) && (parseInt(count.innerText) < 8)) {
-            won = true 
-        } else {  
-            won = false
-        } 
-            const body = {
-            round: {
-                win: won,
-                complete: true,
-                guesses: parseInt(count.innerText),
-                word_id: rounds[rounds.length -1].word.id,
-                word: {
-                    id: rounds[rounds.length -1].word.id,
-                    name: rounds[rounds.length -1].word.name
-                }
-            }
-        }
-        const options = {
-            method: "PATCH",
-            headers: {
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify(body)
-        }
-        fetch(`http://localhost:3000/rounds/${rounds[rounds.length - 1].id}`, options)
-        .then(r => r.json())
-        .then(removeAllChildElements(roundDiv))
-        .then(removeAllChildElements(wrongLetters))
-        .then(roundWin = false)
-        .then(fetchRounds)
+    // static getLastRound(rounds) {
+    //     let won = false
+    //     const count = document.getElementById("counter")
+    //     if ((roundWin == true) && (parseInt(count.innerText) < 8)) {
+    //         won = true 
+    //     } else {  
+    //         won = false
+    //     } 
+    //         const body = {
+    //         round: {
+    //             win: won,
+    //             complete: true,
+    //             guesses: parseInt(count.innerText),
+    //             word_id: rounds[rounds.length -1].word.id,
+    //             word: {
+    //                 id: rounds[rounds.length -1].word.id,
+    //                 name: rounds[rounds.length -1].word.name
+    //             }
+    //         }
+    //     }
+    //     const options = {
+    //         method: "PATCH",
+    //         headers: {
+    //             "Content-type": "application/json"
+    //         },
+    //         body: JSON.stringify(body)
+    //     }
+    //     fetch(`http://localhost:3000/rounds/${rounds[rounds.length - 1].id}`, options)
+    //     .then(r => r.json())
+    //     .then(removeAllChildElements(roundDiv))
+    //     .then(removeAllChildElements(wrongLetters))
+    //     .then(roundWin = false)
+    //     .then(fetchRounds)
     
-    }
+    // }
 
     static freshRound() {
-        removeAllChildElements(roundDiv)
+        removeAllChildElements(wrongLetters)
         removeAllChildElements(guessDiv)
-        fetchRounds()
+        if (currentRound.children.length > 0) {
+            removeAllChildElements(currentRound)
+        }
         newGuess.hidden = false
         letterBank = []
     }
