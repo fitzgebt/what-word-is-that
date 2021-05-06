@@ -19,7 +19,7 @@ function appendRounds(rounds){
                 let wl
                 (round.win) ? wl = "WIN" : wl = "LOSS";
                 if (round.complete) {
-                    li.innerText = `Round ${round.id} -  Word: ${round.word.name}  -  ${wl}!`
+                    li.innerText = `Round ${round.id} -  Word: ${round.word.name}  -  ${wl}!  -  ${round.guesses} Guesses`
                 } else {
                     li.innerText = `Round ${round.id} - In Progress...`
                 }
@@ -30,7 +30,7 @@ function appendRounds(rounds){
             let wl
             (rounds.win) ? wl = "WIN" : wl = "LOSS";
             if (rounds.complete) {
-                li.innerText = `Round ${rounds.id} -  Word: ${rounds.word.name}  -  ${wl}!`
+                li.innerText = `Round ${rounds.id} -  Word: ${rounds.word.name}  -  ${wl}!  -  ${rounds.guesses} Guesses`
             } else {
                 li.innerText = `Round ${rounds.id} - In Progress...`
             }
