@@ -15,6 +15,7 @@ class Round {
 
 
     appendRound(){
+        debugger
         const li = document.createElement("li")
         let wl
         (this.win) ? wl = "WIN" : wl = "LOSS" 
@@ -191,6 +192,7 @@ class Round {
         removeAllChildElements(wrongLetters)
         removeAllChildElements(guessDiv)
         if (currentRound.children.length > 0) {
+            currentRound.children[0].appendRound()
             removeAllChildElements(currentRound)
         }
         newGuess.hidden = false
