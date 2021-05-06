@@ -9,10 +9,10 @@ let letterBank = []
 
 class Word {
 
-    constructor(word) {
-        this.id = word.id
-        this.name = word.name
-    }
+    // constructor(word) {
+    //     this.id = word.id
+    //     this.name = word.name
+    // }
 
     static appendGuessPlatform(round) {
         
@@ -25,7 +25,7 @@ class Word {
             }
             Word.appendCounter()
         } else {
-            roundOver()
+            Round.roundOver()
         }
     }
 
@@ -36,14 +36,18 @@ class Word {
             alert("You already chose that letter - try a new one.")
         } else {
             letterBank.push(userInput)
-            if (parseInt(counter.innerText) <= 8) {
+
+
+            if (parseInt(counter.innerText) <= 8) {    // necessary?
+            
+            
                 if (currentRound.children[0].word.name.includes(userInput)) {
                     let indicies = []
                     const splitWord = currentRound.children[0].word.name.split("")
                     for (const index of splitWord) {
                         (index == userInput) ? indicies.push(userInput) : indicies.push(0)
                     }
-                    Word.replaceBlanks(indicies, userInput) 
+                    Word.replaceBlanks(indicies) 
                 } else {
                     
                     Word.increaseWrongGuess()
@@ -54,7 +58,7 @@ class Word {
         e.target.reset()
     }
         
-    static replaceBlanks(indicies, letter) {
+    static replaceBlanks(indicies) {
         const currentLetters = Word.filterGuessChildNodes(guessDiv)
         removeAllChildNodes(guessDiv)
         for (let x=0; x < indicies.length; x++) {
@@ -91,8 +95,8 @@ class Word {
         if (x == 8) {
             const gameOver = true
             newGuess.hidden = true
-            Word.revealWord(gameOver)
             Word.appendCounter(x)
+            Word.revealWord(gameOver)
         } else {
             Word.appendCounter(x)
         }
