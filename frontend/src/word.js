@@ -16,174 +16,177 @@ class Word {
     }
 
     static appendGuessPlatform(round) {
-        checkIfWin()
+        debugger
+        Word.checkIfWin()
         if (roundWin == false) {
-    
-            removeAllChildNodes(guessDiv)
-            for (i=0; i < round.word.name.length; i++) {
+            // removeAllChildNodes(guessDiv)
+            for (let i=0; i < round.word.name.length; i++) {
                 const u = document.createElement("u")
                 u.innerText = "*"
                 guessDiv.append(u)
             }
-            appendCounter()
+            Word.appendCounter()
         } else {
             roundOver()
         }
         
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
-function removeAllChildNodes(parent) {
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild)
-    }
-}
-
-function removeAllChildElements(parent) {
-    while (parent.children.length > 0) {
-        parent.removeChild(parent.firstElementChild)
-    }
-}
-
-
-function fetchLetters(e) {
-    e.preventDefault()
-    const userInput = e.target.children[1].value
-    if (letterBank.includes(userInput)) {
-        alert("You already chose that letter - try a new one.")
-    } else {
-        fetch("http://localhost:3000/words")
-        .then(r => r.json())
-        .then(wordName)
-        .then(w => letterIncluded(w, userInput))
-        appendLetters(userInput)
-    }
-}
-
-function wordName(word) {
-    return word.name 
-}
-
-function letterIncluded(word, input) {
-    const counter = document.getElementById("counter")
-        letterBank.push(input)
-        if (parseInt(counter.innerText) < 8) {
-            if (word.includes(input)) {
-                let indicies = []
-                splitWord = word.split("")
-                for (const index of splitWord) {
-                    (index == input) ? indicies.push(input) : indicies.push(0)
-                } 
-                replaceBlanks(indicies, input)
-            } else {
-                increaseWrongGuess(word)
-            }
-        }
-}
-    
-function replaceBlanks(indicies, letter) {
-    const currentLetters = filterGuessChildNodes(guessDiv)
-    removeAllChildNodes(guessDiv)
-    for (let x=0; x < indicies.length; x++) {
-        if ((indicies[x] != 0) && (currentLetters[x] == '*')) {
-            const u = document.createElement("u")
-            u.innerText = indicies[x]
-            guessDiv.append(u)
-        } else if (currentLetters[x] == '*') {
-            const u = document.createElement("u")
-            u.innerText = "*"
-            guessDiv.append(u)
+    static wordIncludesLetter(e) {
+        e.preventDefault()
+        const userInput = e.target.children[1].value
+        if (letterBank.includes(userInput)) {
+            alert("You already chose that letter - try a new one.")
         } else {
-            const u = document.createElement("u")
-            u.innerText = currentLetters[x]
-            guessDiv.append(u)
-
-        }
-    }
-    checkIfWin()
-}
-
-function filterGuessChildNodes(parent) {
-    let children = parent.children
-    let arr = []
-    for (let i=0; i < parent.childElementCount; i++) {
-        arr.push(children[i].innerText)
-    }
-    return arr
-}
-
-function increaseWrongGuess(word) {
-    const counter = document.getElementById("counter")
-    let x = parseInt(counter.innerText) + 1 
-    if (x == 8) {
-        const gameOver = true
-        newGuess.hidden = true
-        revealWord(word, gameOver)
-        appendCounter(x)
-    } else {
-        appendCounter(x)
-    }
-}
-
-function appendCounter(num = 0) {
-    const li = document.getElementById("incorrect-guesses-text")
-    if (li.children.length) {
-        removeAllChildElements(li)
-    }
-    const ul = document.createElement("ul")
-    ul.id = "counter"
-    ul.innerText = num
-    wrongGuessDiv.firstElementChild.append(ul)
-}
-
-function appendLetters(letter) {
-    const li = document.createElement("li")
-    li.innerText = letter
-    wrongLetters.append(li)
-}
-
-function revealWord(word, gameOver) {
-    if (gameOver == true) {
-        roundWin = false
-        removeAllChildNodes(guessDiv)
-        for (let i=0; i < word.length; i++) {
-            splitWord = word.split("")
-            const u = document.createElement("u")
-            u.innerText = splitWord[i]
-            guessDiv.append(u)
-        }
-        roundOver(word)
-    }
-}
-
-function checkIfWin() {
-    if (guessDiv.children.length > 0) {
-        let win = true
-        const currentLetters = filterGuessChildNodes(guessDiv)
-        for (let i=0; i < currentLetters.length; i++) {
-            if (currentLetters[i] == '*') {
-                win = false
+            debugger
+            letterBank.push(userInput)
+            if (parseInt(counter.innerText) < 8) {
+                if (currentRound.children[0].word.name.includes(userInput)) {
+                    let indicies = []
+                    splitWord = currentRound.children[0].word.name.split("")
+                    for (const index of splitWord) {
+                        (index == userInput) ? indicies.push(userInput) : indicies.push(0)
+                    }
+                    this.replaceBlanks(indicies, userInput) 
+                } else {
+                    debugger
+                    Word.increaseWrongGuess()
+                }
             }
         }
-        if (win === true) {
-            roundWin = true
+    }
+
+    // static fetchLetters(e) {
+    //     e.preventDefault()
+    //     const userInput = e.target.children[1].value
+    //     if (letterBank.includes(userInput)) {
+    //         alert("You already chose that letter - try a new one.")
+    //     } else {
+    //         fetch("http://localhost:3000/words")
+    //         .then(r => r.json())
+    //         .then(wordName)
+    //         .then(w => letterIncluded(w, userInput))
+    //         appendLetters(userInput)
+    //     }
+    // }
+
+    letterIncluded(word, input) {
+        const counter = document.getElementById("counter")
+            letterBank.push(input)
+            if (parseInt(counter.innerText) < 8) {
+                if (word.includes(input)) {
+                    let indicies = []
+                    splitWord = word.split("")
+                    for (const index of splitWord) {
+                        (index == input) ? indicies.push(input) : indicies.push(0)
+                    } 
+                    replaceBlanks(indicies, input)
+                } else {
+                    increaseWrongGuess(word)
+                }
+            }
+    }
+        
+    static replaceBlanks(indicies, letter) {
+        const currentLetters = filterGuessChildNodes(guessDiv)
+        removeAllChildNodes(guessDiv)
+        for (let x=0; x < indicies.length; x++) {
+            if ((indicies[x] != 0) && (currentLetters[x] == '*')) {
+                const u = document.createElement("u")
+                u.innerText = indicies[x]
+                guessDiv.append(u)
+            } else if (currentLetters[x] == '*') {
+                const u = document.createElement("u")
+                u.innerText = "*"
+                guessDiv.append(u)
+            } else {
+                const u = document.createElement("u")
+                u.innerText = currentLetters[x]
+                guessDiv.append(u)
+    
+            }
+        }
+        checkIfWin()
+    }
+    
+    filterGuessChildNodes(parent) {
+        let children = parent.children
+        let arr = []
+        for (let i=0; i < parent.childElementCount; i++) {
+            arr.push(children[i].innerText)
+        }
+        return arr
+    }
+    
+    static increaseWrongGuess() {
+        debugger
+        // const counter = document.getElementById("counter")
+        let x = parseInt(counter.innerText) + 1 
+        if (x == 8) {
+            const gameOver = true
             newGuess.hidden = true
-            roundOver()
+            revealWord(word, gameOver)
+            Word.appendCounter(x)
+        } else {
+            Word.appendCounter(x)
         }
     }
+    
+    static appendCounter(num = 0) {
+        const li = document.getElementById("incorrect-guesses-text")
+        if (li.children.length) {
+            removeAllChildElements(li)
+        }
+        const ul = document.createElement("ul")
+        ul.id = "counter"
+        ul.innerText = num
+        wrongGuessDiv.firstElementChild.append(ul)
+    }
+    
+    appendLetters(letter) {
+        const li = document.createElement("li")
+        li.innerText = letter
+        wrongLetters.append(li)
+    }
+    
+    revealWord(word, gameOver) {
+        if (gameOver == true) {
+            roundWin = false
+            removeAllChildNodes(guessDiv)
+            for (let i=0; i < word.length; i++) {
+                splitWord = word.split("")
+                const u = document.createElement("u")
+                u.innerText = splitWord[i]
+                guessDiv.append(u)
+            }
+            roundOver(word)
+        }
+    }
+    
+    static checkIfWin() {
+        if (guessDiv.children.length > 0) {
+            let win = true
+            const currentLetters = filterGuessChildNodes(guessDiv)
+            for (let i=0; i < currentLetters.length; i++) {
+                if (currentLetters[i] == '*') {
+                    win = false
+                }
+            }
+            if (win === true) {
+                roundWin = true
+                newGuess.hidden = true
+                roundOver()
+            }
+        }
+    }
+
+
+
+
 }
+
+
+
+
+
+

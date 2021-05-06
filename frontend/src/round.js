@@ -1,13 +1,14 @@
 const newGame = document.getElementById("form-new-game")
 let roundWin = false
 const roundDiv = document.getElementById("pastRounds")
+currentRound = document.getElementById("current-round")
 
 class Round {
 
     constructor(round) {
         this.id = round.id
         this.win = round.win
-        this.comlpete = round.complete
+        this.complete = round.complete
         this.guesses = round.guesses
         this.word = round.word
     }
@@ -24,10 +25,12 @@ class Round {
         li.word = this.word
         if (this.complete === false) {
             li.innerText = `Round ${this.id} - In Progress...`
+            currentRound.append(li)
+            Word.appendGuessPlatform(li)
         } else {
             li.innerText = `Round ${this.id} - ${this.word.name} - ${this.guesses} Guesses - ${wl}!`
+            roundDiv.append(li)
         }
-        roundDiv.append(li)
 
         // if (rounds.length > 1) {
         //     for (let round of rounds) {
@@ -51,7 +54,6 @@ class Round {
         //         li.innerText = `Round ${rounds.id} - In Progress...`
         //     }
         //     roundDiv.append(li)
-        //     appendGuessPlatform(rounds)
             // function to create 'blank spaces for guessing' with the newest rounds obj
         // }
     }
