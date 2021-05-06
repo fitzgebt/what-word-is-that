@@ -19,6 +19,11 @@ class RoundsController < ApplicationController
         round.guesses = 0
         round.word = w
         round.save
+        prev_round = Round.order("id DESC").offset(1).limit(1).first
+        if prev_round
+            prev_round.complete = true
+            prev_round.save
+        end
         render json: round
         # params
     end
