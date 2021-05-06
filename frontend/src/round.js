@@ -116,4 +116,5 @@ function freshRound() {
     removeAllChildElements(guessDiv)
     fetchRounds()
     newGuess.hidden = false
+    letterBank = []
 }

@@ -15,10 +15,6 @@ function appendGuessPlatform(round) {
             u.innerText = "*"
             guessDiv.append(u)
         }
-        // const li = document.createElement("li")
-        // li.id = "incorrect-guesses-text"
-        // li.innerText = "Incorrect Guesses: (8 chances) "
-        // wrongGuessDiv.append(li)
         appendCounter()
     } else {
         roundOver()
@@ -110,9 +106,7 @@ function increaseWrongGuess(word) {
     let x = parseInt(counter.innerText) + 1 
     if (x == 8) {
         const gameOver = true
-        // newGuess.style.display = 'none'
         newGuess.hidden = true
-        debugger
         revealWord(word, gameOver)
         appendCounter(x)
     } else {
@@ -149,12 +143,10 @@ function revealWord(word, gameOver) {
         }
         roundOver(word)
     }
-
 }
 
 function checkIfWin() {
     if (guessDiv.children.length > 0) {
-
         let win = true
         const currentLetters = filterGuessChildNodes(guessDiv)
         for (let i=0; i < currentLetters.length; i++) {
