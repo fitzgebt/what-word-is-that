@@ -50,7 +50,6 @@ married
 uptight
 honorable
 tranquil
-wide-eyed
 immolate
 wet
 vague
@@ -206,7 +205,6 @@ plan
 opt
 scarf
 easy
-black-and-white
 incise
 incise
 glistening
@@ -268,7 +266,6 @@ stove
 bath
 box
 sheet
-well-groomed
 faucet
 yellow
 report
