@@ -3,9 +3,13 @@ let roundWin = false
 const roundDiv = document.getElementById("pastRounds")
 
 function fetchRounds() {
-    fetch("http://localhost:3000/rounds")
-    .then(r => r.json())
-    .then(appendRounds)
+    if (roundDiv.children.length > 0) {
+        removeAllChildElements(roundDiv)
+    } else {
+        fetch("http://localhost:3000/rounds")
+        .then(r => r.json())
+        .then(appendRounds)
+    }
 };
 
 function appendRounds(rounds){
@@ -39,6 +43,7 @@ function appendRounds(rounds){
     
     function postRound(e) {
     e.preventDefault()
+    freshRound()
     const body = {
         round: {
             win: false,
@@ -60,11 +65,7 @@ function appendRounds(rounds){
     }
     fetch("http://localhost:3000/rounds", options)
     .then(r => r.json())
-    .then(removeAllChildElements(roundDiv))
-    .then(appendRounds)
-    // method to display 'guess-platform'
-    // method to display 'guess-letters'
-    
+    .then(appendRounds)    
 }
 
 function roundOver() {
@@ -105,6 +106,14 @@ function getLastRound(rounds) {
     .then(r => r.json())
     .then(removeAllChildElements(roundDiv))
     .then(removeAllChildElements(wrongLetters))
+    .then(roundWin = false)
     .then(fetchRounds)
 
+}
+
+function freshRound() {
+    removeAllChildElements(roundDiv)
+    removeAllChildElements(guessDiv)
+    fetchRounds()
+    newGuess.hidden = false
 }

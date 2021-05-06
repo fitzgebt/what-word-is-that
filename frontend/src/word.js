@@ -109,7 +109,8 @@ function increaseWrongGuess(word) {
     let x = parseInt(counter.innerText) + 1 
     if (x == 8) {
         const gameOver = true
-        newGuess.style.display = 'none'
+        // newGuess.style.display = 'none'
+        newGuess.hidden = true
         revealWord(word, gameOver)
         appendCounter(x)
     } else {
