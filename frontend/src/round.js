@@ -2,6 +2,23 @@ const newGame = document.getElementById("form-new-game")
 let roundWin = false
 const roundDiv = document.getElementById("pastRounds")
 
+class Round {
+
+    constructor(round) {
+        this.id = round.id
+        this.win = round.win
+        this.comlpete = round.comeplete
+        this.guesses = round.guesses
+        this.word = round.word
+        debugger
+    }
+
+
+
+
+
+}
+
 function fetchRounds() {
     if (roundDiv.children.length > 0) {
         removeAllChildElements(roundDiv)
@@ -41,7 +58,7 @@ function appendRounds(rounds){
 
 };
     
-    function postRound(e) {
+function postRound(e) {
     e.preventDefault()
     freshRound()
     const body = {
@@ -65,7 +82,10 @@ function appendRounds(rounds){
     }
     fetch("http://localhost:3000/rounds", options)
     .then(r => r.json())
-    .then(appendRounds)    
+    .then(round => {
+        new Round(round)
+        appendRounds(round)
+    })    
 }
 
 function roundOver() {
