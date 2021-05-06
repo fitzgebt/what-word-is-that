@@ -14,7 +14,46 @@ class Round {
     }
 
 
+    appendRounds(){
+        debugger
+        const li = document.createElement("li")
+        let wl
+        (this.win) ? wl = "WIN" : wl = "LOSS" 
+        li.innerText = `Round ${this.id} - In Progress...`
+        li.id = this.id
+        li.win = this.win
+        li.complete = this.complete
+        li.gueeses = this.guesses
+        li.word = this.word
+        roundDiv.append(li)
 
+        // if (rounds.length > 1) {
+        //     for (let round of rounds) {
+        //         const li = document.createElement("li")
+        //         let wl
+        //         (round.win) ? wl = "WIN" : wl = "LOSS";
+        //         if (round.complete) {
+        //             li.innerText = `Round ${round.id} -  Word: ${round.word.name}  -  ${wl}!  -  ${round.guesses} Guesses`
+        //         } else {
+        //             li.innerText = `Round ${round.id} - In Progress...`
+        //         }
+        //         roundDiv.append(li)
+        //     }
+        // } else { 
+        //     const li = document.createElement("li")
+        //     let wl
+        //     (rounds.win) ? wl = "WIN" : wl = "LOSS";
+        //     if (rounds.complete) {
+        //         li.innerText = `Round ${rounds.id} -  Word: ${rounds.word.name}  -  ${wl}!  -  ${rounds.guesses} Guesses`
+        //     } else {
+        //         li.innerText = `Round ${rounds.id} - In Progress...`
+        //     }
+        //     roundDiv.append(li)
+        //     appendGuessPlatform(rounds)
+            // function to create 'blank spaces for guessing' with the newest rounds obj
+        // }
+
+};
 
 
 }
@@ -27,40 +66,14 @@ function fetchRounds() {
         .then(r => r.json())
         .then(appendRounds)
     }
+    // li.innerText = `Round ${this.id} - ${this.word.name} - ${this.guesses} Guesses - ${wl}!`
 };
 
-function appendRounds(rounds){
-        if (rounds.length > 1) {
-            for (let round of rounds) {
-                const li = document.createElement("li")
-                let wl
-                (round.win) ? wl = "WIN" : wl = "LOSS";
-                if (round.complete) {
-                    li.innerText = `Round ${round.id} -  Word: ${round.word.name}  -  ${wl}!  -  ${round.guesses} Guesses`
-                } else {
-                    li.innerText = `Round ${round.id} - In Progress...`
-                }
-                roundDiv.append(li)
-            }
-        } else { 
-            const li = document.createElement("li")
-            let wl
-            (rounds.win) ? wl = "WIN" : wl = "LOSS";
-            if (rounds.complete) {
-                li.innerText = `Round ${rounds.id} -  Word: ${rounds.word.name}  -  ${wl}!  -  ${rounds.guesses} Guesses`
-            } else {
-                li.innerText = `Round ${rounds.id} - In Progress...`
-            }
-            roundDiv.append(li)
-            appendGuessPlatform(rounds)
-            // function to create 'blank spaces for guessing' with the newest rounds obj
-        }
 
-};
     
 function postRound(e) {
     e.preventDefault()
-    freshRound()
+    // freshRound()
     const body = {
         round: {
             win: false,
@@ -83,8 +96,8 @@ function postRound(e) {
     fetch("http://localhost:3000/rounds", options)
     .then(r => r.json())
     .then(round => {
-        new Round(round)
-        appendRounds(round)
+        let newRound = new Round(round)
+        newRound.appendRounds()
     })    
 }
 
