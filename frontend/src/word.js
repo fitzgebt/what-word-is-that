@@ -16,7 +16,7 @@ class Word {
     }
 
     static appendGuessPlatform(round) {
-        debugger
+        
         Word.checkIfWin()
         if (roundWin == false) {
             // removeAllChildNodes(guessDiv)
@@ -38,7 +38,7 @@ class Word {
         if (letterBank.includes(userInput)) {
             alert("You already chose that letter - try a new one.")
         } else {
-            debugger
+            
             letterBank.push(userInput)
             if (parseInt(counter.innerText) < 8) {
                 if (currentRound.children[0].word.name.includes(userInput)) {
@@ -49,7 +49,7 @@ class Word {
                     }
                     Word.replaceBlanks(indicies, userInput) 
                 } else {
-                    debugger
+                    
                     Word.increaseWrongGuess()
                     Word.appendLetters(userInput)
                 }
@@ -120,13 +120,12 @@ class Word {
     }
     
     static increaseWrongGuess() {
-        debugger
         const counter = document.getElementById("counter")
         let x = parseInt(counter.innerText) + 1 
         if (x == 8) {
             const gameOver = true
             newGuess.hidden = true
-            revealWord(word, gameOver)
+            Word.revealWord(gameOver)
             Word.appendCounter(x)
         } else {
             Word.appendCounter(x)
@@ -150,17 +149,18 @@ class Word {
         wrongLetters.append(li)
     }
     
-    revealWord(word, gameOver) {
+    static revealWord(gameOver) {
+        let word = currentRound.children[0].word.name
         if (gameOver == true) {
             roundWin = false
             removeAllChildNodes(guessDiv)
             for (let i=0; i < word.length; i++) {
-                splitWord = word.split("")
+                let splitWord = word.split("")
                 const u = document.createElement("u")
                 u.innerText = splitWord[i]
                 guessDiv.append(u)
             }
-            roundOver(word)
+            Round.roundOver()
         }
     }
     
