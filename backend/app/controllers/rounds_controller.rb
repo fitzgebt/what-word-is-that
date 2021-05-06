@@ -34,7 +34,8 @@ class RoundsController < ApplicationController
         round.complete = params[:round][:complete]
         round.guesses = params[:round][:guesses]
         round.save
-        render json: {message: "Round Updated"}
+        binding.pry
+        render json: round
     end
 
     def round_params

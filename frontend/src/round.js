@@ -23,6 +23,7 @@ class Round {
         li.complete = this.complete
         li.gueeses = this.guesses
         li.word = this.word
+        debugger
         if (this.complete === false) {
             li.innerText = `Round ${this.id} - In Progress...`
             currentRound.append(li)
@@ -105,16 +106,53 @@ class Round {
         })    
     }
 
-    roundOver() {
-        fetch("http://localhost:3000/rounds")
+    static roundOver() {
+        let won = false
+        const count = document.getElementById("counter")
+        if ((roundWin == true) && (parseInt(count.innerText) < 8)) {
+            won = true 
+        } else {  
+            won = false
+        } 
+            const body = {
+            round: {
+                win: won,
+                complete: true,
+                guesses: parseInt(count.innerText),
+                word_id: currentRound.children[0].word.id,
+                word: {
+                    id: currentRound.children[0].word.id,
+                    name: currentRound.children[0].word.name
+                }
+            }
+        }
+        const options = {
+            method: "PATCH",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(body)
+        }
+        fetch(`http://localhost:3000/rounds/${currentRound.children[0].id}`, options)
         .then(r => r.json())
-        .then(getLastRound)
+        .then(round => {
+            let newRound = new Round(round)
+            newRound.appendRound()
+        })
+        .then(removeAllChildElements(currentRound))
+        .then(removeAllChildElements(wrongLetters))
+        .then(roundWin = false)
+
+
+        // fetch("http://localhost:3000/rounds")
+        // .then(r => r.json())
+        // .then(getLastRound)
     }
 
 
 
 
-    getLastRound(rounds) {
+    static getLastRound(rounds) {
         let won = false
         const count = document.getElementById("counter")
         if ((roundWin == true) && (parseInt(count.innerText) < 8)) {
@@ -150,18 +188,13 @@ class Round {
     
     }
 
-
-
-
-    freshRound() {
+    static freshRound() {
         removeAllChildElements(roundDiv)
         removeAllChildElements(guessDiv)
         fetchRounds()
         newGuess.hidden = false
         letterBank = []
     }
-
-
 
 };
 
