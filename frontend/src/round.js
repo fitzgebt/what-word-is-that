@@ -13,9 +13,7 @@ class Round {
         this.word = round.word
     }
 
-
     appendRound(){
-        debugger
         const li = document.createElement("li")
         let wl
         (this.win) ? wl = "WIN" : wl = "LOSS" 
@@ -29,34 +27,9 @@ class Round {
             currentRound.append(li)
             Word.appendGuessPlatform(li)
         } else {
-            li.innerText = `Round ${this.id} - ${this.word.name} - ${this.guesses} Guesses - ${wl}!`
+            li.innerText = `Round ${this.id} - ${this.word.name} - ${this.guesses} Incorrect Guesses - ${wl}!`
             roundDiv.append(li)
         }
-
-        // if (rounds.length > 1) {
-        //     for (let round of rounds) {
-        //         const li = document.createElement("li")
-        //         let wl
-        //         (round.win) ? wl = "WIN" : wl = "LOSS";
-        //         if (round.complete) {
-        //             li.innerText = `Round ${round.id} -  Word: ${round.word.name}  -  ${wl}!  -  ${round.guesses} Guesses`
-        //         } else {
-        //             li.innerText = `Round ${round.id} - In Progress...`
-        //         }
-        //         roundDiv.append(li)
-        //     }
-        // } else { 
-        //     const li = document.createElement("li")
-        //     let wl
-        //     (rounds.win) ? wl = "WIN" : wl = "LOSS";
-        //     if (rounds.complete) {
-        //         li.innerText = `Round ${rounds.id} -  Word: ${rounds.word.name}  -  ${wl}!  -  ${rounds.guesses} Guesses`
-        //     } else {
-        //         li.innerText = `Round ${rounds.id} - In Progress...`
-        //     }
-        //     roundDiv.append(li)
-            // function to create 'blank spaces for guessing' with the newest rounds obj
-        // }
     }
 
     static fetchRounds() {
@@ -140,53 +113,8 @@ class Round {
             newRound.appendRound()
         })
         .then(removeAllChildElements(currentRound))
-        // .then(removeAllChildElements(wrongLetters))
         .then(roundWin = false)
-
-
-        // fetch("http://localhost:3000/rounds")
-        // .then(r => r.json())
-        // .then(getLastRound)
     }
-
-
-
-
-    // static getLastRound(rounds) {
-    //     let won = false
-    //     const count = document.getElementById("counter")
-    //     if ((roundWin == true) && (parseInt(count.innerText) < 8)) {
-    //         won = true 
-    //     } else {  
-    //         won = false
-    //     } 
-    //         const body = {
-    //         round: {
-    //             win: won,
-    //             complete: true,
-    //             guesses: parseInt(count.innerText),
-    //             word_id: rounds[rounds.length -1].word.id,
-    //             word: {
-    //                 id: rounds[rounds.length -1].word.id,
-    //                 name: rounds[rounds.length -1].word.name
-    //             }
-    //         }
-    //     }
-    //     const options = {
-    //         method: "PATCH",
-    //         headers: {
-    //             "Content-type": "application/json"
-    //         },
-    //         body: JSON.stringify(body)
-    //     }
-    //     fetch(`http://localhost:3000/rounds/${rounds[rounds.length - 1].id}`, options)
-    //     .then(r => r.json())
-    //     .then(removeAllChildElements(roundDiv))
-    //     .then(removeAllChildElements(wrongLetters))
-    //     .then(roundWin = false)
-    //     .then(fetchRounds)
-    
-    // }
 
     static freshRound() {
         removeAllChildElements(wrongLetters)

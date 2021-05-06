@@ -12,14 +12,12 @@ class Word {
     constructor(word) {
         this.id = word.id
         this.name = word.name
-
     }
 
     static appendGuessPlatform(round) {
         
         Word.checkIfWin()
         if (roundWin == false) {
-            // removeAllChildNodes(guessDiv)
             for (let i=0; i < round.word.name.length; i++) {
                 const u = document.createElement("u")
                 u.innerText = "*"
@@ -29,7 +27,6 @@ class Word {
         } else {
             roundOver()
         }
-        
     }
 
     static wordIncludesLetter(e) {
@@ -54,38 +51,8 @@ class Word {
                 }
             }
         }
+        e.target.reset()
     }
-
-    // static fetchLetters(e) {
-    //     e.preventDefault()
-    //     const userInput = e.target.children[1].value
-    //     if (letterBank.includes(userInput)) {
-    //         alert("You already chose that letter - try a new one.")
-    //     } else {
-    //         fetch("http://localhost:3000/words")
-    //         .then(r => r.json())
-    //         .then(wordName)
-    //         .then(w => letterIncluded(w, userInput))
-    //         appendLetters(userInput)
-    //     }
-    // }
-
-    // letterIncluded(word, input) {
-    //     const counter = document.getElementById("counter")
-    //         letterBank.push(input)
-    //         if (parseInt(counter.innerText) < 8) {
-    //             if (word.includes(input)) {
-    //                 let indicies = []
-    //                 const splitWord = word.split("")
-    //                 for (const index of splitWord) {
-    //                     (index == input) ? indicies.push(input) : indicies.push(0)
-    //                 } 
-    //                 replaceBlanks(indicies, input)
-    //             } else {
-    //                 increaseWrongGuess(word)
-    //             }
-    //         }
-    // }
         
     static replaceBlanks(indicies, letter) {
         const currentLetters = Word.filterGuessChildNodes(guessDiv)
@@ -179,9 +146,6 @@ class Word {
             }
         }
     }
-
-
-
 
 }
 
