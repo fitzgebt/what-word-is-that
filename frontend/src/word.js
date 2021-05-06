@@ -3,7 +3,7 @@ const guessDiv = document.getElementById("guess-platforms")
 const wrongGuessDiv = document.getElementById("incorrect-guesses")
 const wrongLetters = document.getElementById("previously-guessed-letters")
 const counter = document.getElementById("counter")
-
+let letterBank = []
 
 function appendGuessPlatform(round) {
     checkIfWin()
@@ -40,14 +40,17 @@ function removeAllChildElements(parent) {
 
 
 function fetchLetters(e) {
-    const userInput = e.target.children[1].value
-    let test
     e.preventDefault()
-    fetch("http://localhost:3000/words")
-    .then(r => r.json())
-    .then(wordName)
-    .then(w => letterIncluded(w, userInput))
-    appendLetters(userInput)
+    const userInput = e.target.children[1].value
+    if (letterBank.includes(userInput)) {
+        alert("You already chose that letter - try a new one.")
+    } else {
+        fetch("http://localhost:3000/words")
+        .then(r => r.json())
+        .then(wordName)
+        .then(w => letterIncluded(w, userInput))
+        appendLetters(userInput)
+    }
 }
 
 function wordName(word) {
@@ -56,23 +59,21 @@ function wordName(word) {
 
 function letterIncluded(word, input) {
     const counter = document.getElementById("counter")
-    if (parseInt(counter.innerText) < 8) {
-        if (word.includes(input)) {
-            let indicies = []
-            splitWord = word.split("")
-            for (const index of splitWord) {
-                (index == input) ? indicies.push(input) : indicies.push(0)
-            } 
-            replaceBlanks(indicies, input)
-        } else {
-            increaseWrongGuess(word)
+        letterBank.push(input)
+        if (parseInt(counter.innerText) < 8) {
+            if (word.includes(input)) {
+                let indicies = []
+                splitWord = word.split("")
+                for (const index of splitWord) {
+                    (index == input) ? indicies.push(input) : indicies.push(0)
+                } 
+                replaceBlanks(indicies, input)
+            } else {
+                increaseWrongGuess(word)
+            }
         }
-    } else {
-        // too many guesses time for new game
-        // revealWord(word, gameOver)
-    }
 }
-
+    
 function replaceBlanks(indicies, letter) {
     const currentLetters = filterGuessChildNodes(guessDiv)
     removeAllChildNodes(guessDiv)
