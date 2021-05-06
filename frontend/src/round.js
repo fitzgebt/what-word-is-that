@@ -7,24 +7,27 @@ class Round {
     constructor(round) {
         this.id = round.id
         this.win = round.win
-        this.comlpete = round.comeplete
+        this.comlpete = round.complete
         this.guesses = round.guesses
         this.word = round.word
-        debugger
     }
 
 
-    appendRounds(){
-        debugger
+    appendRound(){
         const li = document.createElement("li")
         let wl
         (this.win) ? wl = "WIN" : wl = "LOSS" 
-        li.innerText = `Round ${this.id} - In Progress...`
         li.id = this.id
         li.win = this.win
         li.complete = this.complete
         li.gueeses = this.guesses
         li.word = this.word
+        if (this.complete === false) {
+            li.innerText = `Round ${this.id} - In Progress...`
+        } else {
+            debugger
+            li.innerText = `Round ${this.id} - ${this.word.name} - ${this.guesses} Guesses - ${wl}!`
+        }
         roundDiv.append(li)
 
         // if (rounds.length > 1) {
@@ -52,22 +55,29 @@ class Round {
         //     appendGuessPlatform(rounds)
             // function to create 'blank spaces for guessing' with the newest rounds obj
         // }
-
-};
-
-
-}
-
-function fetchRounds() {
-    if (roundDiv.children.length > 0) {
-        removeAllChildElements(roundDiv)
-    } else {
-        fetch("http://localhost:3000/rounds")
-        .then(r => r.json())
-        .then(appendRounds)
     }
-    // li.innerText = `Round ${this.id} - ${this.word.name} - ${this.guesses} Guesses - ${wl}!`
+    static fetchRounds() {
+        if (roundDiv.children.length > 0) {
+            removeAllChildElements(roundDiv)
+        } else {
+            fetch("http://localhost:3000/rounds")
+            .then(r => r.json())
+            .then(this.appendRounds)
+        }
+        // 
+    };
+    
+    static appendRounds(rounds) {
+        for (let round of rounds) {
+            let newRound = new Round(round)
+            newRound.appendRound()
+        }
+    }
+
+
 };
+
+
 
 
     
@@ -97,7 +107,7 @@ function postRound(e) {
     .then(r => r.json())
     .then(round => {
         let newRound = new Round(round)
-        newRound.appendRounds()
+        newRound.appendRound()
     })    
 }
 
