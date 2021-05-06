@@ -1,4 +1,4 @@
-newGame.addEventListener('submit', postRound)
+newGame.addEventListener('submit', Round.postRound)
 newGuess.addEventListener('submit', fetchLetters)
 
 

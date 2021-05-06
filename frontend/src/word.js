@@ -5,22 +5,48 @@ const wrongLetters = document.getElementById("previously-guessed-letters")
 const counter = document.getElementById("counter")
 let letterBank = []
 
-function appendGuessPlatform(round) {
-    checkIfWin()
-    if (roundWin == false) {
 
-        removeAllChildNodes(guessDiv)
-        for (i=0; i < round.word.name.length; i++) {
-            const u = document.createElement("u")
-            u.innerText = "*"
-            guessDiv.append(u)
-        }
-        appendCounter()
-    } else {
-        roundOver()
+
+class Word {
+
+    constructor(word) {
+        this.id = word.id
+        this.name = word.name
+
     }
+
+    static appendGuessPlatform(round) {
+        checkIfWin()
+        if (roundWin == false) {
     
+            removeAllChildNodes(guessDiv)
+            for (i=0; i < round.word.name.length; i++) {
+                const u = document.createElement("u")
+                u.innerText = "*"
+                guessDiv.append(u)
+            }
+            appendCounter()
+        } else {
+            roundOver()
+        }
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
 
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {

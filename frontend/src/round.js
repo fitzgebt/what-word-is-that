@@ -25,7 +25,6 @@ class Round {
         if (this.complete === false) {
             li.innerText = `Round ${this.id} - In Progress...`
         } else {
-            debugger
             li.innerText = `Round ${this.id} - ${this.word.name} - ${this.guesses} Guesses - ${wl}!`
         }
         roundDiv.append(li)
@@ -56,6 +55,7 @@ class Round {
             // function to create 'blank spaces for guessing' with the newest rounds obj
         // }
     }
+
     static fetchRounds() {
         if (roundDiv.children.length > 0) {
             removeAllChildElements(roundDiv)
@@ -64,8 +64,7 @@ class Round {
             .then(r => r.json())
             .then(this.appendRounds)
         }
-        // 
-    };
+    }
     
     static appendRounds(rounds) {
         for (let round of rounds) {
@@ -74,6 +73,93 @@ class Round {
         }
     }
 
+    static postRound(e) {
+        e.preventDefault()
+        // freshRound()
+        const body = {
+            round: {
+                win: false,
+                complete: false,
+                guesses: 0,
+                word_id: 0,
+                word: {
+                    id: 0,
+                    name: ""
+                }
+            }
+        }
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(body)
+        }
+        fetch("http://localhost:3000/rounds", options)
+        .then(r => r.json())
+        .then(round => {
+            let newRound = new Round(round)
+            newRound.appendRound()
+        })    
+    }
+
+    roundOver() {
+        fetch("http://localhost:3000/rounds")
+        .then(r => r.json())
+        .then(getLastRound)
+    }
+
+
+
+
+    getLastRound(rounds) {
+        let won = false
+        const count = document.getElementById("counter")
+        if ((roundWin == true) && (parseInt(count.innerText) < 8)) {
+            won = true 
+        } else {  
+            won = false
+        } 
+            const body = {
+            round: {
+                win: won,
+                complete: true,
+                guesses: parseInt(count.innerText),
+                word_id: rounds[rounds.length -1].word.id,
+                word: {
+                    id: rounds[rounds.length -1].word.id,
+                    name: rounds[rounds.length -1].word.name
+                }
+            }
+        }
+        const options = {
+            method: "PATCH",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(body)
+        }
+        fetch(`http://localhost:3000/rounds/${rounds[rounds.length - 1].id}`, options)
+        .then(r => r.json())
+        .then(removeAllChildElements(roundDiv))
+        .then(removeAllChildElements(wrongLetters))
+        .then(roundWin = false)
+        .then(fetchRounds)
+    
+    }
+
+
+
+
+    freshRound() {
+        removeAllChildElements(roundDiv)
+        removeAllChildElements(guessDiv)
+        fetchRounds()
+        newGuess.hidden = false
+        letterBank = []
+    }
+
+
 
 };
 
@@ -81,83 +167,7 @@ class Round {
 
 
     
-function postRound(e) {
-    e.preventDefault()
-    // freshRound()
-    const body = {
-        round: {
-            win: false,
-            complete: false,
-            guesses: 0,
-            word_id: 0,
-            word: {
-                id: 0,
-                name: ""
-            }
-        }
-    }
-    const options = {
-        method: "POST",
-        headers: {
-            "Content-type": "application/json"
-        },
-        body: JSON.stringify(body)
-    }
-    fetch("http://localhost:3000/rounds", options)
-    .then(r => r.json())
-    .then(round => {
-        let newRound = new Round(round)
-        newRound.appendRound()
-    })    
-}
 
-function roundOver() {
-    // set Round.all.last win/complete/guesses
-    fetch("http://localhost:3000/rounds")
-    .then(r => r.json())
-    .then(getLastRound)
-}
 
-function getLastRound(rounds) {
-    let won = false
-    const count = document.getElementById("counter")
-    if ((roundWin == true) && (parseInt(count.innerText) < 8)) {
-        won = true 
-    } else {  
-        won = false
-    } 
-        const body = {
-        round: {
-            win: won,
-            complete: true,
-            guesses: parseInt(count.innerText),
-            word_id: rounds[rounds.length -1].word.id,
-            word: {
-                id: rounds[rounds.length -1].word.id,
-                name: rounds[rounds.length -1].word.name
-            }
-        }
-    }
-    const options = {
-        method: "PATCH",
-        headers: {
-            "Content-type": "application/json"
-        },
-        body: JSON.stringify(body)
-    }
-    fetch(`http://localhost:3000/rounds/${rounds[rounds.length - 1].id}`, options)
-    .then(r => r.json())
-    .then(removeAllChildElements(roundDiv))
-    .then(removeAllChildElements(wrongLetters))
-    .then(roundWin = false)
-    .then(fetchRounds)
 
-}
 
-function freshRound() {
-    removeAllChildElements(roundDiv)
-    removeAllChildElements(guessDiv)
-    fetchRounds()
-    newGuess.hidden = false
-    letterBank = []
-}
