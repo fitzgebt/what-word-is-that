@@ -111,6 +111,7 @@ function increaseWrongGuess(word) {
         const gameOver = true
         // newGuess.style.display = 'none'
         newGuess.hidden = true
+        debugger
         revealWord(word, gameOver)
         appendCounter(x)
     } else {
@@ -160,8 +161,9 @@ function checkIfWin() {
                 win = false
             }
         }
-        if (win == true) {
+        if (win === true) {
             roundWin = true
+            newGuess.hidden = true
             roundOver()
         }
     }
