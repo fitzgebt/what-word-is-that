@@ -1,7 +1,7 @@
 const newGame = document.getElementById("form-new-game")
 let roundWin = false
 const roundDiv = document.getElementById("pastRounds")
-currentRound = document.getElementById("current-round")
+const currentRound = document.getElementById("current-round")
 
 class Round {
 

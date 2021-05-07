@@ -44,25 +44,34 @@
     </div> -->
 
     <div class="container px-4">
-        <div class="row gx-5">
+        <!-- <div class="row gx-5"> -->
             <div id="guess-platforms" class="d-flex justify-content-center">
         
             </div>
-            <div id="incorrect-guesses" class="d-flex justify-content-right">
-                <ul id="incorrect-guesses-text">"Incorrect Guesses: (8 chances) "
-                    <ul id="counter">0</ul>   
-                </ul>
+            
+
+        <!-- </div> -->
+    </div>
+
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div id="incorrect-guesses" >
+                <h3 id="incorrect-guesses-text">Incorrect Guesses: (8 chances)</h3>
+                <div class="d-flex justify-content-center">
+                    <h1 id="counter" class="d-flex justify-content-center"></h1>   
+
+                </div>
             </div>
-
-
+    
         </div>
+
     </div>
 
 
     <div class="container">
         <div class="row-allign-items-center">
             <div id="letters">
-                <form id="guess-a-letter">
+                <form id="guess-a-letter" class="d-flex justify-content-start">
                     <label for="guess"></label>
                     <input type="text" maxlength="1" name="guess" id="guess"></input>
                     <input type="submit" id="btn-guess" value="Guess">
