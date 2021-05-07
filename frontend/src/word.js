@@ -25,7 +25,8 @@ class Word {
 
     static wordIncludesLetter(e) {
         e.preventDefault()
-        const userInput = e.target.children[1].value
+        const userInput = e.target.children[1].value.toLowerCase()
+        debugger
         if (letterBank.includes(userInput)) {
             alert("You already chose that letter - try a new one.")
         } else {
@@ -95,7 +96,7 @@ class Word {
         if (li.children.length) {
             removeAllChildElements(li)
         }
-        const ul = document.createElement("ul")
+        const ul = document.createElement("div")
         ul.id = "counter"
         ul.innerText = num
         wrongGuessDiv.firstElementChild.append(ul)
@@ -104,7 +105,7 @@ class Word {
     static appendLetters(letter) {
         const ul = document.createElement("ul")  // <== testing on DOM elements
         ul.innerText = letter
-        ul.class = "list-group-item"
+        ul.class = "col"
         wrongLetters.append(ul)
     }
     

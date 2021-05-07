@@ -10,10 +10,10 @@
 </head>
 <body>
     <div id="welcome-div" class="container">
-        <h1>Let's Play 'What Word Is That?'!</h1>
+        <h1>Let's Play 'WHAT WORD IS THAT'!</h1>
     </div>
 
-    <div class="container">
+    <div class="container py-4">
         <div id="newGame">
             <form id="form-new-game">
                 <input type="submit" id="btn-new-game" class="btn btn-primary btn-lg" value="New Game"></input>
@@ -59,23 +59,33 @@
     </div>
 
 
-    <!-- <div class="container">
-        <div id="previously-guessed-letters">
-    
-        </div>
-    </div> -->
-
     <div class="container">
+        <div class="row-allign-items-center">
+            <div id="letters">
+                <form id="guess-a-letter">
+                    <label for="guess"></label>
+                    <input type="text" maxlength="1" name="guess" id="guess"></input>
+                    <input type="submit" id="btn-guess" value="Guess">
+               </form>
+            </div>  
+            <div id="previously-guessed-letters" class="row" >
+        
+            </div>
+
+        </div>
+    </div>
+
+    <!-- <div class="container">
         <div id="letters">
             <form id="guess-a-letter">
                 <label for="guess"></label>
                 <input type="text" maxlength="1" name="guess" id="guess"></input>
                 <input type="submit" id="btn-guess" value="Guess">
            </form>
-        </div>  
-        <div id="previously-guessed-letters" class="list-group">
+        </div>   -->
+        <!-- <div id="previously-guessed-letters" class="list-group">
         
-        </div>
+        </div> -->
     </div>
 
 
