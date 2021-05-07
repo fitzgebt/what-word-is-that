@@ -102,10 +102,10 @@ class Word {
     }
     
     static appendLetters(letter) {
-        const li = document.createElement("ul")  // <== testing on DOM elements
-        li.innerText = letter
-        li.class = "list-group-item"
-        wrongLetters.append(li)
+        const ul = document.createElement("ul")  // <== testing on DOM elements
+        ul.innerText = letter
+        ul.class = "list-group-item"
+        wrongLetters.append(ul)
     }
     
     static revealWord(gameOver) {
