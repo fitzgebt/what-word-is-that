@@ -104,6 +104,7 @@ class Word {
     static appendLetters(letter) {
         const li = document.createElement("ul")  // <== testing on DOM elements
         li.innerText = letter
+        li.class = "list-group-item"
         wrongLetters.append(li)
     }
     
