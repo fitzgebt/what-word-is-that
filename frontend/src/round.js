@@ -20,7 +20,7 @@ class Round {
         li.id = this.id
         li.win = this.win
         li.complete = this.complete
-        li.gueeses = this.guesses
+        li.guesses = this.guesses
         li.word = this.word
         if (this.complete === false) {
             li.innerText = `Round ${this.id} - In Progress...`
@@ -117,10 +117,14 @@ class Round {
     }
 
     static freshRound() {
+        const count = document.getElementById("counter")
         removeAllChildElements(wrongLetters)
         removeAllChildElements(guessDiv)
         if (currentRound.children.length > 0) {
-            currentRound.children[0].appendRound()
+            let newRound = new Round(currentRound.children[0])
+            newRound.complete = true
+            newRound.guesses = count.innerText
+            newRound.appendRound()
             removeAllChildElements(currentRound)
         }
         newGuess.hidden = false

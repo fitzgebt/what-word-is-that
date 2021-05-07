@@ -38,7 +38,7 @@ class Word {
             letterBank.push(userInput)
 
 
-            if (parseInt(counter.innerText) <= 8) {    // necessary?
+            // if (parseInt(counter.innerText) <= 8) {    // necessary?
             
             
                 if (currentRound.children[0].word.name.includes(userInput)) {
@@ -53,7 +53,7 @@ class Word {
                     Word.increaseWrongGuess()
                     Word.appendLetters(userInput)
                 }
-            }
+            // }
         }
         e.target.reset()
     }
