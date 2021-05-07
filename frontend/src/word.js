@@ -9,13 +9,7 @@ let letterBank = []
 
 class Word {
 
-    // constructor(word) {
-    //     this.id = word.id
-    //     this.name = word.name
-    // }
-
-    static appendGuessPlatform(round) {
-        
+    static appendGuessPlatform(round) {  
         Word.checkIfWin()
         if (roundWin == false) {
             for (let i=0; i < round.word.name.length; i++) {
@@ -36,11 +30,6 @@ class Word {
             alert("You already chose that letter - try a new one.")
         } else {
             letterBank.push(userInput)
-
-
-            // if (parseInt(counter.innerText) <= 8) {    // necessary?
-            
-            
                 if (currentRound.children[0].word.name.includes(userInput)) {
                     let indicies = []
                     const splitWord = currentRound.children[0].word.name.split("")
@@ -53,7 +42,6 @@ class Word {
                     Word.increaseWrongGuess()
                     Word.appendLetters(userInput)
                 }
-            // }
         }
         e.target.reset()
     }
