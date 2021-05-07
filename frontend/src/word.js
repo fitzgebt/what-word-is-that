@@ -13,7 +13,7 @@ class Word {
         Word.checkIfWin()
         if (roundWin == false) {
             for (let i=0; i < round.word.name.length; i++) {
-                const u = document.createElement("u")
+                const u = document.createElement("h1")
                 u.innerText = "*"
                 guessDiv.append(u)
             }
@@ -26,7 +26,6 @@ class Word {
     static wordIncludesLetter(e) {
         e.preventDefault()
         const userInput = e.target.children[1].value.toLowerCase()
-        debugger
         if (letterBank.includes(userInput)) {
             alert("You already chose that letter - try a new one.")
         } else {
@@ -52,15 +51,15 @@ class Word {
         removeAllChildNodes(guessDiv)
         for (let x=0; x < indicies.length; x++) {
             if ((indicies[x] != 0) && (currentLetters[x] == '*')) {
-                const u = document.createElement("u")
+                const u = document.createElement("h1")
                 u.innerText = indicies[x]
                 guessDiv.append(u)
             } else if (currentLetters[x] == '*') {
-                const u = document.createElement("u")
+                const u = document.createElement("h1")
                 u.innerText = "*"
                 guessDiv.append(u)
             } else {
-                const u = document.createElement("u")
+                const u = document.createElement("h1")
                 u.innerText = currentLetters[x]
                 guessDiv.append(u)
     
@@ -116,7 +115,7 @@ class Word {
             removeAllChildNodes(guessDiv)
             for (let i=0; i < word.length; i++) {
                 let splitWord = word.split("")
-                const u = document.createElement("u")
+                const u = document.createElement("h1")
                 u.innerText = splitWord[i]
                 guessDiv.append(u)
             }
