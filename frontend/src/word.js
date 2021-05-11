@@ -2,7 +2,7 @@ const newGuess = document.getElementById("guess-a-letter")
 const guessDiv = document.getElementById("guess-platforms")
 const wrongGuessDiv = document.getElementById("incorrect-guesses")
 const wrongLetters = document.getElementById("previously-guessed-letters")
-const counter = document.getElementById("counter")
+// const counter = document.getElementById("counter")
 let letterBank = []
 
 
